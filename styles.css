@@ -68,7 +68,7 @@ img {
     width: 30%;
 }
 
-@media (min-device-width:320px) and (max-device-width:768px) { {
+@media (min-device-width:320px) and (max-device-width:768px) {
     p, label, button {
     font-size: 1.6em;
     }
