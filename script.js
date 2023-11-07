@@ -129,7 +129,9 @@ function displayQuestion() {
     } else {
         quizContainer.innerHTML = '';
         if (questions.length - score >= 30) {
-
+            const scoreText = document.createElement('p');
+            scoreText.innerHTML = 'Чтобы у Вас уменьшилась тревожность, предлагаем Вам посмотреть на эти картинки. Если проблема не уходит длительное время, лучше обратится к психологу.';
+            quizContainer.appendChild(scoreText);
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
             for (let i = 0; i < 2; i++) {
@@ -143,7 +145,6 @@ function displayQuestion() {
 
                 imageContainer.appendChild(row);
             }
-
             quizContainer.appendChild(imageContainer);
         }
         else {
@@ -153,10 +154,6 @@ function displayQuestion() {
             const scoreTitle = document.createElement('h2');
             scoreTitle.textContent = `Все норм, у тебя ${(score / questions.length) * 100}/100 уровень тревоги`;
             scoreContainer.appendChild(scoreTitle);
-
-            const scoreText = document.createElement('p');
-            scoreText.innerHTML = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec rutrum urna. Aliquam dignissim erat eget tincidunt tincidunt. Integer non est tortor. Fusce pellentesque, mauris egestas sollicitudin volutpat, lorem purus faucibus nisl, eu scelerisque lorem justo nec sem.';
-            scoreContainer.appendChild(scoreText);
             quizContainer.appendChild(scoreContainer);
         }
     }
