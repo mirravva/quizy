@@ -128,10 +128,42 @@ function displayQuestion() {
         });
     } else {
         quizContainer.innerHTML = '';
-        if (questions.length - score >= 30) {
+        var level = "";
+        var pics = true;
+        var text = "";
+        if (score >= 0 && score <= 5) {
+            level = "очень низкий";
+            pics = false;
+        }
+        else if (score >= 6 && score <= 15) {
+            level = "низкий";
+            pics = false;
+        }
+        else if (score >= 16 && score <= 25) {
+            level = "средний";
+            text = "В целях снижения уровня тревожности рекомендуем Вам посмотреть на картинки, представленные ниже.";
+        }
+        else if (score >= 26 && score <= 40) {
+            level = "высокий";
+            text = "В целях снижения уровня тревожности рекомендуем Вам посмотреть на картинки, представленные ниже. Если проблема не уходит на протяжении долгого времени, рекомендуем обратиться к специалисту";
+        }
+        else if (score >= 41 && score <= 50) {
+            level = "очень высокий";
+            text = "В целях снижения уровня тревожности рекомендуем Вам посмотреть на картинки, представленные ниже. Если проблема не уйдёт в ближайшее время, настоятельно рекомендуем обратиться к специалисту";
+        }
+
+        const scoreContainer = document.createElement('div');
+        scoreContainer.classList.add('score-container');
+
+        const scoreTitle = document.createElement('h2');
+        scoreTitle.textContent = ` Вы набрали ${score} из 50 баллов. У Вас ${level} уровень тревоги.`;
+        scoreContainer.appendChild(scoreTitle);
+
+
+        if (pics) {
             const scoreText = document.createElement('p');
-            scoreText.innerHTML = 'Чтобы у Вас уменьшилась тревожность, предлагаем Вам посмотреть на эти картинки. Если проблема не уходит длительное время, лучше обратится к психологу.';
-            quizContainer.appendChild(scoreText);
+            scoreText.innerHTML = text;
+            scoreContainer.appendChild(scoreText);
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
             for (let i = 0; i < 2; i++) {
@@ -145,17 +177,9 @@ function displayQuestion() {
 
                 imageContainer.appendChild(row);
             }
-            quizContainer.appendChild(imageContainer);
+            scoreContainer.appendChild(imageContainer);
         }
-        else {
-            const scoreContainer = document.createElement('div');
-            scoreContainer.classList.add('score-container');
-
-            const scoreTitle = document.createElement('h2');
-            scoreTitle.textContent = `Все норм, у тебя ${(score / questions.length) * 100}/100 уровень тревоги`;
-            scoreContainer.appendChild(scoreTitle);
-            quizContainer.appendChild(scoreContainer);
-        }
+        quizContainer.appendChild(scoreContainer);
     }
 }
 
@@ -167,9 +191,10 @@ function checkAnswer() {
         const answer = selectedAnswer.value;
 
         // Check if the answer is correct (you can implement your own scoring logic)
-        if (answer === questions[currentQuestionIndex][1][0]) {
+        if ((currentQuestionIndex < 13 && answer === "Нет") || (currentQuestionIndex > 12 && answer === "Да")) {
             score++;
         }
+        console.log(score);
 
         currentQuestionIndex++;
         displayQuestion();
